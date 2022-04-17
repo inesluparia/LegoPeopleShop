@@ -1,0 +1,1 @@
+<!-- a profile page with favorites list, orders and user settings -->
