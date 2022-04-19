@@ -8,8 +8,8 @@
 	import { isAuthenticated, user } from "./stores/authStore";
 	import Notifications from "svelte-notifications";
 	import { navigate } from "svelte-navigator";
-import CartSvg from "./components/cartSVG.svelte";
-import LegoHeadSvg from "./components/legoHeadSVG.svelte";
+	import CartSvg from "./components/cartSVG.svelte";
+	import LegoHeadSvg from "./components/legoHeadSVG.svelte";
 
 	function logout() {
 		isAuthenticated.set(false);
@@ -20,32 +20,28 @@ import LegoHeadSvg from "./components/legoHeadSVG.svelte";
 <Notifications>
 	<Router>
 		<nav>
-			<!-- USE THIS SYNTAX TO ADD STYLES -->
-			<!-- <a href='/' class='link' use:Link>EXTRA</a> -->
-			<!-- <a id="logo" class="link" href="/" use:Link>LEGO PEOPLE</a> -->
-
-			<div id="logo">
-				<Link class="link" to="/">LEGO PEOPLE</Link>
+			<div id="logo" class="nav-link">
+				<Link to="/">LEGO PEOPLE</Link>
 			</div>
-			<div>
+			<div class="nav-link">
 				<Link to="/">Home</Link>
-			</div>
-			<div>
+			</div>			
+			<div class="nav-link">
 				<Link to="/shop">Shop</Link>
 			</div>
-			<div>
-				<LegoHeadSvg />
+			<div class="nav-link">
 				{#if $isAuthenticated}
-					<a class="nav-link" href="/" on:click={logout}>Log Out</a>
+					<a class="nav-link" href="/" on:click={logout}>Log Out &nbsp;<LegoHeadSvg /></a>
 				{:else}
-					<Link to="/login">Log in</Link>
+					<Link to="/login">Log in &nbsp;<LegoHeadSvg /></Link>
 				{/if}
 			</div>
-			<div on:click={()=> {
+			<div class="nav-link"
+			on:click={()=> {
 				if ($isAuthenticated) navigate("/cart")
 				else alert("Please log in to fill your cart!")
-			}}> 
-				<CartSvg />	Cart
+			}}
+			>Cart &nbsp; <CartSvg />
 			</div>
 		</nav>
 		<Route path="/">
@@ -70,21 +66,33 @@ import LegoHeadSvg from "./components/legoHeadSVG.svelte";
 <style>
 	nav {
 		background-color: rgb(241, 241, 241);
-		width: 100%;
-		padding: 1.5rem;
+		padding: 1.3rem;
 		display: flex;
 		justify-content: space-between;
 		text-align: justify;
 		text-decoration: none;
+		
 	}
 	nav > div {
 		margin: 0px 30px 0px 30px;
 		cursor:pointer;
+		align-self: center;
 	}
 	#logo {
 		width: 20px;
 		font-size: larger;
 		font-weight: bolder;
 	}
-	 	
+	
+	.nav-link, .nav-link > :global(a) {
+		text-decoration: none;
+		color: rgb(0, 0, 103);
+		-webkit-transition: 0.1s ease-in-out;
+        transition: 0.1s ease-in-out;
+		display: flex;
+	}
+	.nav-link:hover, .nav-link > :global(a):hover{
+	  color: rgb(244, 200, 1);
+	}
+	
 </style>
